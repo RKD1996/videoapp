@@ -1,87 +1,84 @@
 <template>
-  <div class="navbar">
-    <ul class="nav-menu">
-      <li class="logo"><h1>Video Share</h1> </li>
-      <li class="search"><input type="text" > <button>search</button> </li>
-      <li class="nav-link">All Videos</li>
-      <li class="nav-link">Login</li>
-      <li class="nav-link">Sign-up</li>
-    </ul>
+  <div>
+    <b-navbar toggleable="md" type="dark" variant="dark" class="navbar" fixed>
+      <b-navbar-brand to="/" class="logo">Video Share</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <div class="search m-auto" align="center">
+          <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+          <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+        </div>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+
+          <b-nav-item class="nav-item">All Videos</b-nav-item>
+          <b-nav-item class="nav-item" v-if="show_login">Login</b-nav-item>
+          <b-nav-item class="nav-item" v-if="show_login" to="/sign-up">Sign-up</b-nav-item>
+          <b-nav-item class="nav-item" v-else>Sign-out</b-nav-item>
+
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
   </div>
+
 </template>
 <script>
-
+export default {
+  name: 'navbar',
+  data () {
+    return {
+      show_login: true
+    }
+  },
+  methods: {
+    check_token () {
+      let token = localStorage.getItem('token')
+      if (token) {
+        this.show_login = !this.show_login
+      }
+    }
+  },
+  created () {
+    this.check_token()
+  },
+  mounted() {
+    this.check_token()
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
-  .navbar{
-    text-align: center;
-    background: #000;
-    border-bottom: 1px solid #ddd;
-    border-radius: 0px 0px 20px 20px;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    box-shadow: 0 0 4px rgba(0,0,0,0.2);
-    color: white;
-    .nav-menu{
-      margin: 0;
-      padding: 0px;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      .logo{
-        flex-basis: 40%;
-        padding: 15px;
-        h1{
-          font-family: 'Pacifico', cursive;
-          margin: 0;
-          padding: 0;
-        }
-      }
-      .search {
-        flex-basis: 20%;
-        padding: 25px;
-        display: flex;
-        font-family: 'Josefin Sans', sans-serif;
-        input{
-          flex-basis: 80%;
-          padding: 5px 10px;
-          color: #222;
-          border-radius: 25px 0px 0px 25px;
-          outline: none;
-        }
-        button{
-          font-family: 'Josefin Sans', sans-serif;
-          flex-basis: 20%;
-          border: 0;
-          background: #005fff;
-          color: white;
-          padding: 0 15px;
-          border-radius: 0px 25px 25px 0px;
-          cursor: pointer;
-          &:hover{
-            box-shadow: 0 0 8px #005fff;
-          }
-        }
-      }
-      li{
-        &.nav-link {
-          font-family: 'Josefin Sans', sans-serif;
-          flex-basis: 10%;
-          padding: 30px;
-          transition: .3s;
-          cursor: pointer;
-          &:hover{
-            background: #111;
-          }
-        }
-        &:last-child{
-          &:hover{
-            border-radius: 0px 0px 20px 0px;
-          }
-        }
-      }
+// font-family: 'Pacifico', cursive;
+// font-family: 'Josefin Sans', sans-serif;
+.navbar{
+  .logo{
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+  }
+  .nav-item{
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    @media(max-width: 767px){
+      text-align: center;
     }
   }
+  .search{
+    display: flex;
+    width: 500px;
+    @media(max-width: 767px){
+      width: 100%;
+      flex-direction: column;
+    }
+    @media(min-width: 767px) and (max-width: 1020px){
+      width: 340px;
+    }
+    input{
+      width: 100%;
+    }
+  }
+}
 </style>
