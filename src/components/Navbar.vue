@@ -14,7 +14,7 @@
         <b-navbar-nav class="ml-auto">
 
           <b-nav-item class="nav-item">All Videos</b-nav-item>
-          <b-nav-item class="nav-item" v-if="show_login">Login</b-nav-item>
+          <b-nav-item class="nav-item" v-if="show_login" to="/login">Login</b-nav-item>
           <b-nav-item class="nav-item" v-if="show_login" to="/sign-up">Sign-up</b-nav-item>
           <b-nav-item class="nav-item" v-else>Sign-out</b-nav-item>
 

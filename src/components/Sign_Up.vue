@@ -10,7 +10,7 @@
         <span v-if="isEmail">Not an Email</span>
         <div class="password">
           <b-form-input :type="input_type" placeholder="Password (minimum 6 characters)" v-model="user.password_digest"></b-form-input>
-          <i class="material-icons" v-if="!visibility" @click="showPassword()">visibility</i>
+          <i class="material-icons" v-if="visibility" @click="showPassword()">visibility</i>
           <i class="material-icons" v-else @click="showPassword()">visibility_off</i>
         </div>
         <b-form-input :type="input_type" placeholder="Confirm Password" v-model="c_pass" :change="confirmPassword()"></b-form-input>
@@ -35,7 +35,7 @@ import axios from 'axios'
           password_digest: ''
         },
         input_type: 'password',
-        visibility: true,
+        visibility: false,
         pass_match: false,
         isEmail: false
       }
@@ -43,11 +43,7 @@ import axios from 'axios'
     methods: {
       showPassword () {
         this.visibility = !this.visibility
-        if (this.visibility) {
-          this.input_type = 'text'
-        } else {
-          this.input_type = 'password'
-        }
+        this.input_type = this.visibility? 'text':'password'
       },
       submit () {
         this.isEmail = (this.user.username.match('@') && this.user.username != '')? true:false
@@ -63,7 +59,7 @@ import axios from 'axios'
               'user': vm.user
             }
           }).then(function (res) {
-            console.log(res)
+            vm.$router.go(-1)
           }).cath(function (err) {
             console.log(err)
           })
